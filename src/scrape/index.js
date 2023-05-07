@@ -2,7 +2,6 @@ const log = require("debug")("scrap.js:scrape");
 
 const vanilla = require("./vanilla");
 const headless = require("./headless");
-const proxy = require("./proxy");
 const extract = require("./extract");
 
 module.exports = async function scrape(scrape_url, options = null) {
@@ -18,8 +17,6 @@ module.exports = async function scrape(scrape_url, options = null) {
         let result;
         if (options.headless) {
             result = await headless(scrape_url, options);
-        } else if (options.proxy) {
-            result = await proxy(scrape_url, options);
         } else {
             result = await vanilla(scrape_url, options);
         }

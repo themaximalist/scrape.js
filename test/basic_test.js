@@ -4,7 +4,7 @@ const assert = require("assert");
 const scrape = require("../src/scrape");
 const Scrape = require("../src/service/Scrape");
 
-describe("Scraper", function () {
+describe("Basic Scraper", function () {
     this.slow(2500);
     this.timeout(15000);
 
@@ -20,6 +20,7 @@ describe("Scraper", function () {
     it("should be able to scrape news.google.com redirect", async function () { // works well with cURL but normal user agents will render javascript redirect
         const data = await scrape("https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
         assert.ok(data);
+        console.log(data.content);
         assert.equal(data.url, "https://www.nytimes.com/2023/05/04/nyregion/trump-bragg-trial-date.html"); // redirect
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
@@ -62,10 +63,9 @@ describe("Scraper", function () {
         assert.ok(data.content.includes("research"));
     });
 
-    it.only("should be able to scrape investors.com", async function () { // needs headless stealth mode
+    it("should be able to scrape investors.com", async function () { // needs headless stealth mode
         const data = await Scrape("https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data);
-        console.log(data.content);
         assert.equal(data.url, "https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
@@ -96,6 +96,4 @@ describe("Scraper", function () {
         assert.ok(data.html.length > 100);
         assert.ok(data.html.includes("<h1>Example Domain</h1>"));
     });
-
-
 });

@@ -9,16 +9,28 @@ const clean = require("./clean");
 const virtualConsole = new jsdom.VirtualConsole();
 virtualConsole.on("error", () => { });
 
+function cleanArticleHTML(content) {
+    const clean_content = clean(content);
+    const cleanedDom = new JSDOM(clean_content, { virtualConsole });
+    const text = cleanedDom.window.document.body.textContent;
+    const lines = text.split("\n");
+    return lines.filter(line => {
+        if (line.trim().length == 0) return false;
+        if (line.trim() == "\n") return false;
+        return true;
+    }).map(line => {
+        return line.trim();
+    }).join("\n");
+}
+
 module.exports = function (url, html) {
     try {
-        const cleaned = clean(html);
-        if (!cleaned) throw new Error("html is not cleanable");
-
         const doc = new JSDOM(html, { url, virtualConsole });
-        // too many false positives...just try to parse
-        // if (!isProbablyReaderable(doc.window.document)) throw new Error("html is probably not readerable");
         const reader = new Readability(doc.window.document);
-        return reader.parse();
+        const extract = reader.parse();
+        const article = cleanArticleHTML(extract.content);
+        extract.content = article;
+        return extract;
     } catch (e) {
         log(`error extracting ${url} ${e.message}`);
         throw e;

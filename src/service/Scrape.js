@@ -2,27 +2,20 @@ const log = require("debug")("scrap.js:Scrape");
 const scrape = require("../scrape");
 
 module.exports = async function Scrape(scrape_url) {
-    let result;
+    const options = [
+        { headless: false, proxy: false },
+        { headless: false, proxy: true },
+        { headless: true, proxy: false },
+        { headless: true, proxy: true },
+    ];
 
-    result = await scrape(scrape_url);
-    if (result && result.content) return result;
+    for (const option of options) {
+        log(`scraping ${scrape_url} with options ${JSON.stringify(option)}`);
 
-    log(`headless scrape failed for ${scrape_url}... trying proxy`);
-    result = await scrape(scrape_url, { proxy: true });
-    if (result && result.content) return result;
-
-    /*
-    log(`vanilla scrape failed for ${scrape_url}... trying headless`);
-    result = await scrape(scrape_url, { headless: true });
-    if (result && result.content) return result;
-    */
-
-    /*
-
-    log(`proxy scrape failed for ${scrape_url}... trying headless proxy`);
-    result = await scrape(scrape_url, { headless: true, proxy: true });
-    if (result && result.content) return result;
-    */
+        const result = await scrape(scrape_url, option);
+        if (result && result.content) return result;
+        log(`failed scraping ${scrape_url} with options ${JSON.stringify(option)}`);
+    }
 
     throw new Error(`failed to scrape: ${scrape_url}`);
 }
