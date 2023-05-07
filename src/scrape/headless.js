@@ -1,7 +1,7 @@
 const log = require("debug")("scrap.js:headless");
 
 const puppeteer = require("puppeteer-extra");
-const proxychain = require("./proxychain");
+const proxies = require("../service/proxies");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
 
@@ -19,7 +19,7 @@ module.exports = async function headless(scrape_url, options = null) {
     };
 
     if (options.proxy) {
-        options.proxy_server = await proxychain.create();
+        options.proxy_server = await proxies.createWrapper();
         browser_options.args = [`--proxy-server=${options.proxy_server.replace("http://", "http=")}`]; // chrome expects http= instead of http://
     }
 
@@ -40,7 +40,7 @@ module.exports = async function headless(scrape_url, options = null) {
 
     await browser.close();
     if (options.proxy) {
-        await proxychain.close(options.proxy_server);
+        await proxies.closeWrapper(options.proxy_server);
     }
 
     return { url, html };

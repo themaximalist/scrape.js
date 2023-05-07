@@ -62,9 +62,10 @@ describe("Scraper", function () {
         assert.ok(data.content.includes("research"));
     });
 
-    it("should be able to scrape investors.com", async function () { // needs headless stealth mode
+    it.only("should be able to scrape investors.com", async function () { // needs headless stealth mode
         const data = await Scrape("https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data);
+        console.log(data.content);
         assert.equal(data.url, "https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data.html);
         assert.ok(data.html.length > 100);

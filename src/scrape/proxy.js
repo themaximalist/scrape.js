@@ -3,6 +3,7 @@ const log = require("debug")("scrap.js:proxy");
 const axios = require("axios");
 const { HttpProxyAgent } = require("http-proxy-agent");
 const { HttpsProxyAgent } = require("https-proxy-agent");
+const { getProxy } = require("../service/proxies");
 
 const SmartUserAgent = require("../service/SmartUserAgent");
 
@@ -12,7 +13,7 @@ module.exports = async function vanilla(url, options = null) {
     if (!options.timeout) options.timeout = 2000;
     if (!options.userAgent) options.userAgent = SmartUserAgent(url);
 
-    const proxy = `http://${process.env.ZENROWS_API_KEY}:custom_headers=true@proxy.zenrows.com:8001`;
+    const proxy = getProxy();
     const httpAgent = new HttpProxyAgent(proxy);
     const httpsAgent = new HttpsProxyAgent(proxy);
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -31,6 +32,8 @@ module.exports = async function vanilla(url, options = null) {
         if (response.status !== 200) {
             throw new Error(`status code ${response.status}`);
         }
+
+        console.log(response);
 
         const html = response.data;
         const responseURL = response.request.res.responseUrl;
