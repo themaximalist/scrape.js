@@ -20,7 +20,6 @@ describe("Basic Scraper", function () {
     it("should be able to scrape news.google.com redirect", async function () { // works well with cURL but normal user agents will render javascript redirect
         const data = await scrape("https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
         assert.ok(data);
-        console.log(data.content);
         assert.equal(data.url, "https://www.nytimes.com/2023/05/04/nyregion/trump-bragg-trial-date.html"); // redirect
         assert.ok(data.html);
         assert.ok(data.html.length > 100);

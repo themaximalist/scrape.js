@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:vanilla");
+const log = require("debug")("scrape.js:vanilla");
 
 const axios = require("axios");
 const { HttpProxyAgent } = require("http-proxy-agent");
@@ -38,6 +38,10 @@ module.exports = async function vanilla(url, options = null) {
 
         if (response.status !== 200) {
             throw new Error(`status code ${response.status}`);
+        }
+
+        if (!response.data || typeof response.data !== "string") {
+            throw new Error(`invalid response data`);
         }
 
         const html = response.data;

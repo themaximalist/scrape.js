@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:SmartUserAgent");
+const log = require("debug")("scrape.js:SmartUserAgent");
 
 const USER_AGENT_AXIOS = "Axios 0.0.1";
 const USER_AGENT_CURL = "curl/7.85.0";

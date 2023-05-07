@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:Scrape");
+const log = require("debug")("scrape.js:Scrape");
 const scrape = require("../scrape");
 
 module.exports = async function Scrape(scrape_url) {

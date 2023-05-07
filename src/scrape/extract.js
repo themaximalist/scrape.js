@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:extract");
+const log = require("debug")("scrape.js:extract");
 
 const { Readability, isProbablyReaderable } = require("@mozilla/readability");
 const jsdom = require("jsdom");
@@ -28,6 +28,7 @@ module.exports = function (url, html) {
         const doc = new JSDOM(html, { url, virtualConsole });
         const reader = new Readability(doc.window.document);
         const extract = reader.parse();
+
         const article = cleanArticleHTML(extract.content);
         extract.content = article;
         return extract;

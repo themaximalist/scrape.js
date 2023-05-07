@@ -21,4 +21,14 @@ describe("Content Extractor", function () {
         assert(!data.content.includes("<img"));
         assert(!data.content.includes("<p"));
     });
+
+    it("should extract content regression", async function () {
+        const url = "https://www.thedailybeast.com/qatar-will-host-the-worlds-biggest-conference-on-bioethicsand-scientists-hate-it";
+        const data = await Scrape(url);
+        assert(data);
+        assert(data.content);
+        assert(data.title);
+        assert(data.description);
+        assert(data.content.length > 100);
+    });
 });

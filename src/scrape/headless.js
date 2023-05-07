@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:headless");
+const log = require("debug")("scrape.js:headless");
 
 const puppeteer = require("puppeteer-extra");
 const proxies = require("../service/proxies");

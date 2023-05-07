@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:scrape");
+const log = require("debug")("scrape.js:scrape");
 
 const vanilla = require("./vanilla");
 const headless = require("./headless");

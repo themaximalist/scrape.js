@@ -1,4 +1,4 @@
-const log = require("debug")("scrap.js:proxies");
+const log = require("debug")("scrape.js:proxies");
 const proxychain = require("proxy-chain");
 
 function getProxy() {
