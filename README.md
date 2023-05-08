@@ -36,17 +36,19 @@ const data = await Scrape("https://complex-url.com/with/heavy/js.html");
 npm install @themaximalist/scrape.js
 ```
 
+
+
+## Usage
+
 ```javascript
 const { scrape, Scrape } = require("@themaximalist/scrape.js");
 await scrape("http://example.com"); // one-shot and fail if not successful
 await Scrape("http://example.com"); // multi-try, escalating sophistication
 ```
 
-That's it!
 
 
-
-## Configuration
+## Additional Configuration
 
 `scrape.js` uses Zen Rows for proxy rotation. To use it acquire a Zen Rows API key and setup the environment variable. `scrape.js` can be used without proxies, but is less effective.
 
