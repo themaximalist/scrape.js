@@ -6,6 +6,14 @@ const { HttpsProxyAgent } = require("https-proxy-agent");
 
 const SmartUserAgent = require("../service/SmartUserAgent");
 const { getProxy } = require("../service/proxies");
+const GetCanonicalURL = require("../service/GetCanonicalURL");
+
+function getURLFromResponse(response) {
+    const canonicalURL = GetCanonicalURL(response.data);
+    if (canonicalURL) return canonicalURL;
+
+    return response.request.res.responseUrl;
+}
 
 module.exports = async function vanilla(url, options = null) {
     if (!options) options = {};
@@ -45,7 +53,7 @@ module.exports = async function vanilla(url, options = null) {
         }
 
         const html = response.data;
-        const responseURL = response.request.res.responseUrl;
+        const responseURL = getURLFromResponse(response);
 
         return { url: responseURL, html };
     } catch (e) {

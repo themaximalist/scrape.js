@@ -1,6 +1,6 @@
 {
     "name": "@themaximalist/scrape.js",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "Easy web scraping and article extraction library",
     "main": "src/index.js",
     "scripts": {
@@ -25,7 +25,8 @@
         "proxy-chain": "^2.3.0",
         "puppeteer": "^20.1.1",
         "puppeteer-extra": "^3.3.6",
-        "puppeteer-extra-plugin-stealth": "^2.11.2"
+        "puppeteer-extra-plugin-stealth": "^2.11.2",
+        "string-strip-html": "^8.4.0"
     },
     "devDependencies": {
         "dotenv": "^16.0.3",
