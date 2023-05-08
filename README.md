@@ -46,6 +46,16 @@ That's it!
 
 
 
+## Configuration
+
+`scrape.js` uses Zen Rows for proxy rotation. To use it acquire a Zen Rows API key and setup the environment variable. `scrape.js` can be used without proxies, but is less effective.
+
+```bash
+ZENROWS_API_KEY=abcxyz123
+```
+
+
+
 ## Examples
 
 View [test](https://github.com/themaximal1st/scrape.js/tree/main/test) on how to use `scrape.js`.
@@ -56,7 +66,7 @@ View [test](https://github.com/themaximal1st/scrape.js/tree/main/test) on how to
 
 `scrape.js` is currently used in the following projects:
 
--   [News Score](https://newsscore.com)
+-   [News Score](https://newsscore.com) — score the news, score the news, rewrite the headlines
 
 
 
