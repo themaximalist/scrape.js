@@ -11,7 +11,8 @@ module.exports = function (html) {
     if (!canonicalLink) return null;
 
     const url = canonicalLink.getAttribute("href");
-    if (!url) return null;
+
+    if (!url || url.indexOf("/") == 0) return null; // don't accept relative urls
 
     return url;
 }

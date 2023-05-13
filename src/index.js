@@ -1,7 +1,1 @@
-const scrape = require("./scrape/index");
-const Scrape = require("./service/Scrape");
-
-module.exports = {
-    scrape,
-    Scrape
-};
+module.exports = require("./scrape");

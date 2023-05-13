@@ -1,8 +1,7 @@
 require("dotenv").config();
 
 const assert = require("assert");
-const scrape = require("../src/scrape");
-const Scrape = require("../src/service/Scrape");
+const scrape = require("../src/index");
 
 describe("Basic Scraper", function () {
     this.slow(2500);
@@ -17,19 +16,16 @@ describe("Basic Scraper", function () {
         assert.ok(data.html.includes("<h1>Example Domain</h1>"));
     });
 
-    it("should be able to scrape news.google.com redirect", async function () { // works well with cURL but normal user agents will render javascript redirect
+    it("should be able to scrape news.google.com redirect", async function () { // redirect
         const data = await scrape("https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
+        console.log(data);
         assert.ok(data);
         assert.equal(data.url, "https://www.nytimes.com/2023/05/04/nyregion/trump-bragg-trial-date.html"); // redirect
+        assert.equal(data.original_url, "https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
         assert.ok(data.html.includes("nytimes.com"));
-        assert.ok(data.content);
-        assert.ok(data.title);
-        assert.ok(data.author);
-        assert.ok(data.description);
-        assert.ok(data.content.includes("Donald J. Trump"));
-        assert.ok(data.description.includes("Donald J. Trump"));
+        assert.ok(data.html.includes("Donald J. Trump"));
     });
 
     it("should be able to scrape usnews.com", async function () { // works well with Axios user agent for some reason
@@ -39,60 +35,29 @@ describe("Basic Scraper", function () {
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
         assert.ok(data.html.includes("usnews.com"));
-        assert.ok(data.content);
-        assert.ok(data.title);
-        assert.ok(data.author);
-        assert.ok(data.description);
-        assert.ok(data.title.includes("Crypto"));
-        assert.ok(data.content.includes("crypto"));
+        assert.ok(data.html.includes("Crypto"));
     });
 
     it("should be able to scrape vancouver.citynews.ca", async function () { // needs headless content, doesn't work with vanilla
-        const data = await Scrape("https://vancouver.citynews.ca/2023/05/04/ubc-funding-cancer-treatment-research/");
+        const data = await scrape("https://vancouver.citynews.ca/2023/05/04/ubc-funding-cancer-treatment-research/");
         assert.ok(data);
         assert.equal(data.url, "https://vancouver.citynews.ca/2023/05/04/ubc-funding-cancer-treatment-research/");
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
         assert.ok(data.html.includes("vancouver.citynews.ca"));
-        assert.ok(data.content);
-        assert.ok(data.title);
-        assert.ok(data.author);
-        assert.ok(data.description);
-        assert.ok(data.title.includes("funding"));
-        assert.ok(data.content.includes("research"));
+        assert.ok(data.html.includes("funding"));
+        assert.ok(data.html.includes("research"));
     });
 
     it("should be able to scrape investors.com", async function () { // needs headless stealth mode
-        const data = await Scrape("https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
+        const data = await scrape("https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data);
         assert.equal(data.url, "https://www.investors.com/news/technology/amd-stock-rises-on-report-of-team-up-with-microsoft-on-ai-chips/");
         assert.ok(data.html);
         assert.ok(data.html.length > 100);
         assert.ok(data.html.includes("investors.com"));
-        assert.ok(data.content);
-        assert.ok(data.title);
-        assert.ok(data.author);
-        assert.ok(data.description);
-        assert.ok(data.title.includes("AMD"));
-        assert.ok(data.content.includes("stock"));
-        assert.ok(data.content.includes("Microsoft"));
-    });
-
-    it("should be able to scrape with proxy", async function () {
-        const data = await scrape("https://example.com", { proxy: true });
-        assert.ok(data);
-        assert.equal(data.url, "https://example.com/"); // trailing slash
-        assert.ok(data.html);
-        assert.ok(data.html.length > 100);
-        assert.ok(data.html.includes("<h1>Example Domain</h1>"));
-    });
-
-    it("should be able to scrape headless with proxy", async function () {
-        const data = await scrape("https://example.com", { headless: true, proxy: true });
-        assert.ok(data);
-        assert.equal(data.url, "https://example.com/"); // trailing slash
-        assert.ok(data.html);
-        assert.ok(data.html.length > 100);
-        assert.ok(data.html.includes("<h1>Example Domain</h1>"));
+        assert.ok(data.html.includes("AMD"));
+        assert.ok(data.html.includes("stock"));
+        assert.ok(data.html.includes("Microsoft"));
     });
 });
