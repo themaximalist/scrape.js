@@ -12,7 +12,7 @@ describe("Bulk Scraper", function () {
 
     const urls = readFileSync("./test/urls.txt", "utf8").split("\n").filter(Boolean);
 
-    it.only("should be able to scrape urls list", async function () {
+    it("should be able to scrape urls list", async function () {
         for (const url of shuffle(urls).slice(0, 10)) {
             const data = await scrape(url);
             assert(data);

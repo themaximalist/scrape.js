@@ -6,6 +6,10 @@ puppeteer.use(StealthPlugin());
 
 const proxies = require("./proxies");
 const rotate_user_agent = require("./rotate_user_agent");
+const block_resources = require("./block_resources");
+
+class ScrapeError extends Error { }
+
 
 module.exports = async function headless(scrape_url, options = null) {
 
@@ -31,10 +35,19 @@ module.exports = async function headless(scrape_url, options = null) {
     try {
         const page = await browser.newPage();
 
+        await block_resources(page);
+
         try {
             await page.goto(scrape_url, { waitUntil: 'networkidle0', timeout: options.timeout });
         } catch (e) {
-            log(`Navigation timeout reached for ${scrape_url} ...attempting to scrape the current state.`);
+            if (e.name == "TimeoutError") {
+                log(`Navigation timeout reached for ${scrape_url} ...attempting to scrape the current state.`);
+            } else if (e.toString().indexOf("ERR_BLOCKED_BY_CLIENT") > -1) {
+                log(`Navigation was blocked by client...probably a pdf or other binary content we don't handle`)
+                throw new ScrapeError("Navigation was blocked by client...unable to handle contentType");
+            } else {
+                throw e;
+            }
         }
 
         const html = await page.evaluate(() => document.querySelector('*').outerHTML);
@@ -45,7 +58,7 @@ module.exports = async function headless(scrape_url, options = null) {
         return { url, html };
 
     } catch (e) {
-        console.log("ERROR THROWING DURING PUPPETEER");
+        throw e;
     } finally {
         await browser.close();
 

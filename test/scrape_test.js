@@ -3,7 +3,7 @@ require("dotenv").config();
 const assert = require("assert");
 const scrape = require("../src/index");
 
-describe("Basic Scraper", function () {
+describe.only("Basic Scraper", function () {
     this.slow(2500);
     this.timeout(15000);
 
@@ -18,7 +18,6 @@ describe("Basic Scraper", function () {
 
     it("should be able to scrape news.google.com redirect", async function () { // redirect
         const data = await scrape("https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
-        console.log(data);
         assert.ok(data);
         assert.equal(data.url, "https://www.nytimes.com/2023/05/04/nyregion/trump-bragg-trial-date.html"); // redirect
         assert.equal(data.original_url, "https://news.google.com/rss/articles/CBMiR2h0dHBzOi8vd3d3Lm55dGltZXMuY29tLzIwMjMvMDUvMDQvbnlyZWdpb24vdHJ1bXAtYnJhZ2ctdHJpYWwtZGF0ZS5odG1s0gEA?oc=5");
@@ -59,5 +58,14 @@ describe("Basic Scraper", function () {
         assert.ok(data.html.includes("AMD"));
         assert.ok(data.html.includes("stock"));
         assert.ok(data.html.includes("Microsoft"));
+    });
+
+    it("should fail on pdfs", async function () {
+        try {
+            const data = await scrape("https://bitcoin.org/bitcoin.pdf");
+            assert.fail("should have failed");
+        } catch (e) {
+            assert.ok("expected failure");
+        }
     });
 });
