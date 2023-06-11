@@ -4,7 +4,7 @@ const assert = require("assert");
 const scrape = require("../src/index");
 
 describe.only("Basic Scraper", function () {
-    this.slow(2500);
+    this.slow(5000);
     this.timeout(15000);
 
     it("should be able to scrape example.com", async function () {

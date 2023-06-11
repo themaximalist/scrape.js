@@ -38,7 +38,10 @@ module.exports = async function headless(scrape_url, options = null) {
         await block_resources(page);
 
         try {
-            await page.goto(scrape_url, { waitUntil: 'networkidle0', timeout: options.timeout });
+            await Promise.all([
+                page.goto(scrape_url, { waitUntil: 'networkidle2', timeout: options.timeout }),
+                page.waitForNavigation({ waitUntil: 'networkidle2', timeout: options.timeout }),
+            ]);
         } catch (e) {
             if (e.name == "TimeoutError") {
                 log(`Navigation timeout reached for ${scrape_url} ...attempting to scrape the current state.`);
@@ -58,6 +61,7 @@ module.exports = async function headless(scrape_url, options = null) {
         return { url, html };
 
     } catch (e) {
+        console.log("ERROR", e);
         throw e;
     } finally {
         await browser.close();
