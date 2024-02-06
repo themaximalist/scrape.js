@@ -1,6 +1,17 @@
 # scrape.js
 
-`scrape.js` is an easy to use web scraping library for node.js
+<img src="logo.png" />
+
+<div class="badges" style="text-align: center">
+<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/themaximal1st/scrape.js">
+<img alt="NPM Downloads" src="https://img.shields.io/npm/dt/%40themaximalist%2Fscrape.js">
+<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/themaximal1st/scrape.js">
+<img alt="GitHub License" src="https://img.shields.io/github/license/themaximal1st/scrape.js">
+</div>
+
+<br />
+
+`Scrape.js` is an easy to use web scraping library for Node.js:
 
 * Extremely Fast
 * Scrape nearly any website
@@ -10,22 +21,14 @@
 
 ```javascript
 const data = await scrape("https://example.com");
-// { url, html, content, title, author, description }
+// { url, html, original_url, options }
 ```
 
 You can specify additional options to `scrape()` for more control:
 
 ```javascript
-const data = await scrape("https://example.com", { headless: true, extract: false, proxy: true});
+const data = await scrape("https://example.com", { headless: true, proxy: true});
 // { url, html }
-```
-
-The best way to use `scrape.js` is with `Scrape`, which tries to scrape the page in the fastest way possible, and falls back to more sophisticated techniques that may take longer.
-
-```javascript
-const data = await Scrape("https://complex-url.com/with/heavy/js.html");
-// tries & fails with vanilla scraper, falls back to headless or headless proxy if needed
-// { url, html, content, title, author, description }
 ```
 
 
@@ -41,14 +44,13 @@ npm install @themaximalist/scrape.js
 ## Usage
 
 ```javascript
-const { scrape, Scrape } = require("@themaximalist/scrape.js");
-await scrape("http://example.com"); // one-shot and fail if not successful
-await Scrape("http://example.com"); // multi-try, escalating sophistication
+const scrape = require("@themaximalist/scrape.js");
+await scrape("http://example.com");
 ```
 
 
 
-## Additional Configuration
+## Configuration
 
 `scrape.js` uses Zen Rows for proxy rotation. To use it acquire a Zen Rows API key and setup the environment variable. `scrape.js` can be used without proxies, but is less effective.
 
