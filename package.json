@@ -1,7 +1,7 @@
 {
     "name": "@themaximalist/scrape.js",
-    "version": "0.0.9",
-    "description": "Easy web scraping and article extraction library for node.js",
+    "version": "0.1.0",
+    "description": "Simple but feature-packed web scraping library for Node.js.",
     "homepage": "https://scrapejs.themaximalist.com",
     "main": "src/index.js",
     "scripts": {

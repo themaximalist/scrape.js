@@ -18,7 +18,7 @@ function getURLFromResponse(response) {
 module.exports = async function vanilla(url, options = null) {
     if (!options) options = {};
     if (!options.method) options.method = "GET";
-    if (!options.timeout) options.timeout = 3000;
+    if (!options.timeout) options.timeout = 3500;
     if (!options.userAgent) options.userAgent = RotateUserAgent(url);
     if (typeof options.proxy === "undefined") options.proxy = false;
 
