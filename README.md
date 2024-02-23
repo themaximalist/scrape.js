@@ -2,7 +2,7 @@
 
 <img src="public/logo.png" alt="Scrape.js — Web Scraping Library for Node.js" class="logo" style="max-width: 400px" />
 
-<div class="badges" style="text-align: center; margin-top: -50px;">
+<div class="badges" style="text-align: center; margin-top: -10px;">
 <a href="https://github.com/themaximal1st/scrape.js"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/themaximal1st/scrape.js"></a>
 <a href="https://www.npmjs.com/package/@themaximalist/scrape.js"><img alt="NPM Downloads" src="https://img.shields.io/npm/dt/%40themaximalist%2Fscrape.js"></a>
 <a href="https://github.com/themaximal1st/scrape.js"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/themaximal1st/scrape.js"></a>
