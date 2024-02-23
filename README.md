@@ -10,7 +10,7 @@
 </div>
 <br />
 
-`Scrape.js` is an easy to use web scraping library for Node.js:
+`Scrape.js` is an easy to use web scraping library for Node.js.
 
 ```javascript
 const data = await scrape("https://example.com");
@@ -18,7 +18,6 @@ const data = await scrape("https://example.com");
 ```
 
 **Features**
-
 
 * Fast
 * Scrape nearly any website
